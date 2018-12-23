@@ -40,7 +40,6 @@ class DeepQAInterface(object):
 
     @app.route('/parse', methods=['POST', 'GET'])
     def parse(self, request):
-        self.set_headers(request)
 
         if request.method.decode('utf-8', 'strict') == 'GET':
             request_params = decode_parameters(request)
@@ -49,7 +48,8 @@ class DeepQAInterface(object):
                 request.content.read().decode('utf-8', 'strict'))
 
         try:
-            q = request_params['q']
+            q = request_params.get('q') or request_params.get('sentence', "")
+            logger.info("Received: '{}'".format(q))
             return self.bot.daemonPredict(q)
         except Exception as e:
             return "Error {}".format(e)
