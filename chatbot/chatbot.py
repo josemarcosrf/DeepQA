@@ -26,12 +26,18 @@ import os  # Files management
 import tensorflow as tf
 import numpy as np
 import math
+import logging
 
+from tendo import colorer
 from tqdm import tqdm  # Progress bar
 from tensorflow.python import debug as tf_debug
 
 from chatbot.textdata import TextData
 from chatbot.model import Model
+
+logging.basicConfig(format="%(levelname)s - %(filename)s - %(lineno)s: %(message)s")
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 
 class Chatbot:
@@ -289,7 +295,7 @@ class Chatbot:
 
         # Predicting for each model present in modelDir
         for modelName in sorted(modelList):  # TODO: Natural sorting
-            print('Restoring previous model from {}'.format(modelName))
+            logger.info('Restoring previous model from {}'.format(modelName))
             self.saver.restore(sess, modelName)
             print('Testing...')
 
@@ -470,16 +476,20 @@ class Chatbot:
 
         modelName = self._getModelName()
 
+        logger.debug("model name is: {}".format(modelName))
+
         if os.listdir(self.modelDir):
             if self.args.reset:
                 print('Reset: Destroying previous model at {}'.format(self.modelDir))
             # Analysing directory content
             elif os.path.exists(modelName):  # Restore the model
-                print('Restoring previous model from {}'.format(modelName))
+                logger.info('Restoring previous model from {}'.format(modelName))
                 self.saver.restore(sess, modelName)  # Will crash when --reset is not activated and the model has not been saved yet
             elif self._getModelList():
                 print('Conflict with previous models.')
-                raise RuntimeError('Some models are already present in \'{}\'. You should check them first (or re-try with the keepAll flag)'.format(self.modelDir))
+                raise RuntimeError('Some models are already present in \'{}\'.'
+                                   'You should check them first'
+                                   '(or re-try with the keepAll flag)'.format(self.modelDir))
             else:  # No other model to conflict with (probably summary files)
                 print('No previous model found, but some files found at {}. Cleaning...'.format(self.modelDir))  # Warning: No confirmation asked
                 self.args.reset = True
