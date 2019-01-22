@@ -69,4 +69,4 @@ if __name__ == '__main__':
     chitchat = DeepQAInterface(args.model_tag,
                                os.getcwd())
 
-    chitchat.app.run('localhost', args.port)
+    chitchat.app.run('0.0.0.0', args.port)

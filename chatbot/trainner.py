@@ -34,7 +34,7 @@ def main():
 
     # Define parametter: [min, max]
     dictParams = {
-        "batchSize": [int, [1, 3]]
+        "batchSize": [int, [1, 3]],
         "learningRate": [float, [1, 3]]
         }
 
