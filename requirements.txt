@@ -3,6 +3,6 @@ klein==17.10.0
 tensorflow==1.15.2
 nltk==3.4.5
 channels==1.1.6
-Django==1.11.23
+Django==1.11.28
 numpy==1.13.0
 tqdm==4.28.1
