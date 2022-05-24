@@ -1,6 +1,6 @@
 tendo==0.2.8
 klein==17.10.0
-tensorflow==1.15.2
+tensorflow==2.6.4
 nltk==3.4.5
 channels==1.1.6
 Django==1.11.29
