@@ -4,5 +4,5 @@ klein==17.10.0
 nltk==3.4.5
 channels==1.1.6
 Django==1.11.29
-numpy==1.13.0
+numpy==1.21.0
 tqdm==4.28.1
